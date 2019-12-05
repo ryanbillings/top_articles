@@ -2,6 +2,7 @@ import React from 'react';
 import { render, wait } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import App from './App';
+import {getArticles} from './testHelper';
 
 test('renders the app', () => {
   const { getByText } = render(<App />);
@@ -10,11 +11,10 @@ test('renders the app', () => {
 });
 
 test('sets the articles upon a successful API call', async () => {
+  const articles = getArticles();
   const fakeResponse = {
     status: 'ok',
-    articles: [{
-      title: 'A good day'
-    }]
+    articles
   };
 
   jest.spyOn(window, 'fetch').mockImplementationOnce(() => {
@@ -25,7 +25,7 @@ test('sets the articles upon a successful API call', async () => {
 
   const {getByText} = render(<App />);
   await wait(() => {
-    const articleDiv = getByText(/A good day/);
+    const articleDiv = getByText(/Example article title/);
     expect(articleDiv).toBeInTheDocument();
   });
 });
