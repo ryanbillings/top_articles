@@ -2,16 +2,29 @@ import React, {useEffect, useState} from 'react';
 import Utils from './Utils';
 import './App.css';
 
+
+
+async function fetchArticles() {
+  const response = await fetch(Utils.urls.newsApi);
+  return await response.json();
+}
+
 function App() {
 
   const [articles, setArticles] = useState([]);
-
+  const [error, setError] = useState(false);
+  const retrieve = async () => {
+    const data = await fetchArticles();
+    if (data.status === 'ok' && data.articles) {
+      const {articles} = data;
+      setError(false);
+      setArticles(articles);
+    } else {
+      setError(true);
+    }
+  }
   useEffect(() => {
-    fetch(Utils.urls.newsApi)
-      .then(resp => resp.json())
-      .then(json => {
-        setArticles(json.articles);
-      });
+    retrieve();
   }, []);
 
   return (
@@ -25,6 +38,12 @@ function App() {
             {article.title}
           </div>);
         })}
+        {error && (
+          <div>
+            Error loading articles!
+            <input type='button' onClick={retrieve} value="Try Again" />
+          </div>
+        )}
       </div>
     </div>
   );
