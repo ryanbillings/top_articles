@@ -25,7 +25,7 @@ test('sets the articles upon a successful API call', async () => {
 
   const {getByText} = render(<App />);
   await wait(() => {
-    const articleDiv = getByText(/A good day/);
+    const articleDiv = getByText(/Top Stories Today/);
     expect(articleDiv).toBeInTheDocument();
   });
 });
