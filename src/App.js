@@ -1,6 +1,22 @@
 import React, {useEffect, useState} from 'react';
+
+// Material UI Components
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
+// Our Components
 import Utils from './Utils';
+import ArticleList from './ArticleList';
 import './App.scss';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(3, 2),
+    margin: theme.spacing(3)
+  },
+}));
 
 function App() {
 
@@ -10,6 +26,7 @@ function App() {
   const retrieve = async () => {
     const response = await fetch(Utils.urls.newsApi);
     const data = await response.json();
+
     if (data.status === 'ok' && data.articles) {
       const {articles} = data;
       setError(false);
@@ -23,24 +40,30 @@ function App() {
     retrieve();
   }, []);
 
+  const classes = useStyles();
+
   return (
     <div className="App">
-      <header className="App-header">
-        Top Stories Today
-      </header>
-      <div className="App-body">
-        {articles.map((article, idx) => {
-          return (<div key={idx} className="App-body-article">
-            {article.title}
-          </div>);
-        })}
-        {error && (
-          <div>
-            <h2>Error loading articles!</h2>
-            <input type='button' onClick={retrieve} value="Try Again" />
-          </div>
-        )}
-      </div>
+      <Paper className={classes.root}>
+        <header className="App-header">
+          <Typography variant="h3" component="h1">
+            Top Stories Today
+          </Typography>
+        </header>
+        <div className="App-body">
+          <ArticleList articles={articles} />
+          {error && (
+            <div>
+              <Typography variant="h2">
+                Error loading articles!
+              </Typography>
+              <Button onClick={retrieve}>
+                Try Again
+              </Button>
+            </div>
+          )}
+        </div>
+      </Paper>
     </div>
   );
 }

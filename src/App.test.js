@@ -5,7 +5,7 @@ import App from './App';
 
 test('renders the app', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/Header/i);
+  const linkElement = getByText(/Top Stories Today/i);
   expect(linkElement).toBeInTheDocument();
 });
 
@@ -25,7 +25,7 @@ test('sets the articles upon a successful API call', async () => {
 
   const {getByText} = render(<App />);
   await wait(() => {
-    const articleDiv = getByText(/Top Stories Today/);
+    const articleDiv = getByText(/A good day/);
     expect(articleDiv).toBeInTheDocument();
   });
 });
