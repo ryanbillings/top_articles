@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
 
 function Article(props) {
   const classes = useStyles();
+
   const handleSelectArticle = evt => {
     evt.preventDefault();
     props.onSelectArticle({
@@ -22,11 +23,11 @@ function Article(props) {
       description: props.description,
       content: props.content
     });
-  }
+  };
 
   return (
     <GridListTile style={{...props.style}}>
-      <img src={props.urlToImage} alt={props.title} />
+      <img src={props.urlToImage || '/loaderror.png'} alt={props.title} />
       <GridListTileBar
         title={props.title}
         subtitle={<span>by: {props.sourceName}</span>}
