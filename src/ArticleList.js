@@ -44,6 +44,7 @@ function ArticleList(props) {
               onSelectArticle={props.onSelectArticle}
               style={{...props.style}}
               {...article}
+              sourceName={article.source && article.source.name}
             />
           );
         })}
