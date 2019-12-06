@@ -3,11 +3,7 @@
   flex-flow: column;
   align-items: center;
   background-color: #f0f0f0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  height: 100%;
 
   &-header {
     text-align: center;

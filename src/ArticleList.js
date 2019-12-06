@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import GridList from '@material-ui/core/GridList';
 import Article from './Article';
 
@@ -19,10 +20,23 @@ const useStyles = makeStyles(theme => ({
 
 function ArticleList(props) {
   const classes = useStyles();
+  const theme = useTheme();
+
+  // Responsive styling. 
+  // useMediaQuery is a hook thus needs to be called sequentially
+  let gridStyles = {cols: 3, height: 200};
+  if(useMediaQuery(theme.breakpoints.down('md'))){
+    gridStyles.cols = 2;
+    gridStyles.height = 300;
+  }
+  if (useMediaQuery(theme.breakpoints.down('sm'))){
+    gridStyles.cols = 1;
+    gridStyles.height = 350;
+  }
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={160} className={classes.gridList} cols={3}>
+      <GridList cellHeight={gridStyles.height} className={classes.gridList} cols={gridStyles.cols}>
         {props.articles.map((article, idx) => {
           return (
             <Article
