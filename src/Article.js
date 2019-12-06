@@ -13,15 +13,25 @@ const useStyles = makeStyles(theme => ({
 
 function Article(props) {
   const classes = useStyles();
+  const handleSelectArticle = evt => {
+    evt.preventDefault();
+    props.onSelectArticle({
+      title: props.title,
+      sourceName: props.sourceName,
+      url: props.url,
+      description: props.description,
+      content: props.content
+    });
+  }
 
   return (
     <GridListTile style={{...props.style}}>
-      <img src={props.urlToImage} alt={props.title} />,
+      <img src={props.urlToImage} alt={props.title} />
       <GridListTileBar
         title={props.title}
         subtitle={<span>by: {props.sourceName}</span>}
         actionIcon={
-          <IconButton>
+          <IconButton onClick={handleSelectArticle}>
             <InfoIcon className={classes.icon}/>
           </IconButton>
         }

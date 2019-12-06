@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // Our Components
 import Utils from './Utils';
 import ArticleList from './ArticleList';
+import ArticleModal from './ArticleModal';
 import './App.scss';
 
 const useStyles = makeStyles(theme => ({
@@ -21,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 function App() {
 
   const [articles, setArticles] = useState([]);
+  const [selectedArticle, setSelectedArticle] = useState(null);
   const [error, setError] = useState(false);
 
   const retrieve = async () => {
@@ -50,8 +52,9 @@ function App() {
             Top Stories Today
           </Typography>
         </header>
+        {selectedArticle && <ArticleModal onClose={() => setSelectedArticle(null)} {...selectedArticle} />}
         <div className="App-body">
-          <ArticleList articles={articles} />
+          <ArticleList onSelectArticle={setSelectedArticle} articles={articles} />
           {error && (
             <div>
               <Typography variant="h2">

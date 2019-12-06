@@ -41,10 +41,9 @@ function ArticleList(props) {
           return (
             <Article
               key={idx}
-              urlToImage={article.urlToImage}
-              title={article.title}
-              sourceName={article.source.name}
+              onSelectArticle={props.onSelectArticle}
               style={{...props.style}}
+              {...article}
             />
           );
         })}
